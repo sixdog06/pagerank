@@ -89,7 +89,7 @@ void insertSetOrd(DLListStr L, char *val){
 		}
 		if(node == NULL) {
 			L->last->next = new;
-    	    new->prev = L->last;
+    	    		new->prev = L->last;
 			new->next = NULL;
 			L->last = new;
 		} else if(node == L->first) {
@@ -104,6 +104,27 @@ void insertSetOrd(DLListStr L, char *val){
 		}
 	}
 	L->nitems++;
+}
+
+// find str at certion index
+char *show_a_Str(DLListStr L, int n) {
+	DLListNode *curr = L->first;
+	while(n>0) {
+		curr = curr->next;
+		n--;
+	}
+	return curr->value;
+}
+
+// find the indx of a str
+int show_Index(DLListStr L, char *s) {
+	int n = 0;
+	DLListNode *curr = L->first;
+	while(curr->value != NULL && strcmp(curr->value, s)) {
+		curr = curr->next;	
+		n++;
+	}
+	return n;
 }
 
 // display items from a DLListStr, comma separated

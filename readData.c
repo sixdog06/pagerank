@@ -3,6 +3,8 @@
 
 #include "Graph.h"
 #include "readData.h"
+#include "DLListStr.h"
+
 //#include "InvertedIdx.h"
 
 /*
@@ -58,10 +60,9 @@ void readSection1(char *urlname, Graph g){
 	}
 }
 
-
+/*
 void readSection2(char *filename, InvertedIdx idx){
 
-/*
    let's say filename is "url31.txt"
    Open "url31.txt"
    read Section-2 
@@ -70,7 +71,7 @@ void readSection2(char *filename, InvertedIdx idx){
 	 read lines (tokens) and add  words (normalised) in inverted index ADT idx
 	 stop reading when first two tokens are "#end" and  "Section-2"
 	)
-*/
+
 	char delim[2] = " ";
 	char *token;
 	char line[MAXSTRING] ;
@@ -106,10 +107,35 @@ void readSection2(char *filename, InvertedIdx idx){
 	}
 
 }
-
-void GetCollection() {
+*/
+DLListStr GetCollection() {
 	char delim[2] = " ";
 	char *token;
-	char line[MAXSTRING] ;
+	char line[MAXSTRING];
 	FILE *f;
+	
+	DLListStr L = newDLListStr();
+	if((f = fopen ("collection.txt" , "r")) == NULL) {
+		return L;
+	}
+	while(fgets(line, MAXSTRING, f) != NULL) {
+		int len = strlen(line);
+		if(line[len-1] == '\n') { // get rid of the '\n'
+			line[len-1] = '\0';
+		}
+		token = strtok(line, delim);
+		while(token != NULL) {
+			if(strcmp(token, "\n") != 0) {
+				//printf("word is %s", token);
+				insertSetOrd(L, token);	
+			}
+			token = strtok(NULL, delim);
+		}
+	}
+	return L;
+}
+
+Graph GetGraph() {
+	DLListStr L = GetCollection();
+
 }

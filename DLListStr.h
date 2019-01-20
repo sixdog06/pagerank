@@ -21,9 +21,9 @@ typedef struct DLListRep *DLListStr;
 DLListStr newDLListStr();
 
 
-
-
 void insertSetOrd(DLListStr L, char *val);
+char *show_a_Str(DLListStr L, int n);
+int show_Index(DLListStr L, char *s);
 
 // free up all space associated with list
 void freeDLListStr(DLListStr);

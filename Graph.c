@@ -1,5 +1,5 @@
 // Graph ADT
-// reference: taken from Adjacency Matrix Representation ... COMP9024 19t0
+// Adjacency Matrix Representation ... COMP9024 17s2
 #include "Graph.h"
 #include <assert.h>
 #include <stdlib.h>
@@ -11,7 +11,8 @@ typedef struct GraphRep {
    int    nE;      // #edges
 } GraphRep;
 
-Graph newGraph(char *V) {
+Graph newGraph(int V) {
+   assert(V >= 0);
    int i;
 
    Graph g = malloc(sizeof(GraphRep));
@@ -29,6 +30,11 @@ Graph newGraph(char *V) {
    }
 
    return g;
+}
+
+// check if vertex is valid in a graph
+bool validV(Graph g, Vertex v) {
+   return (g != NULL && v >= 0 && v < g->nV);
 }
 
 void insertEdge(Graph g, Edge e) {

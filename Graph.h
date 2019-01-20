@@ -1,10 +1,10 @@
-// reference: taken from Graph ADT interface ... COMP9024 19t0
+// Graph ADT interface ... COMP9024 17s2
 #include <stdbool.h>
 
 typedef struct GraphRep *Graph;
 
 // vertices are ints
-typedef char *Vertex;
+typedef int Vertex;
 
 // edges are pairs of vertices (end-points)
 typedef struct Edge {
