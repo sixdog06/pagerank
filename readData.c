@@ -30,9 +30,12 @@ void readSection1(char *urlname, Graph g, DLListStr L){
 	char line[MAXSTRING] ;
 	FILE *f;
 	int flag = 0; // if flag = 1, capture the urls
-
+	char *temp;
+	strcpy(temp, urlname);
+	strcat(temp, ".txt");
+	
 	// open a vaild file
-	if((f = fopen (urlname, "r")) == NULL) {
+	if((f = fopen (temp, "r")) == NULL) {
 		return;
 	}
 
@@ -49,12 +52,15 @@ void readSection1(char *urlname, Graph g, DLListStr L){
 	        token = strtok(line, delim);
 			while(token != NULL) {
 				if(strcmp(token, "\n") != 0) {
+					printf("urlname is %s\n", urlname);
 					printf("word is %s\n", token);
-
-					//Edge e;
-					//e.v = show_Index(L, temp);
-					//e.w = show_Index(L, token);
-					//printf("eee = %d eee = %d\n", e.v, e.w);
+					
+					/*
+					Edge e;
+					e.v = show_Index(L, urlname);
+					e.w = show_Index(L, token);
+					printf("eee = %d eee = %d\n", e.v, e.w);
+					*/
 					//insertEdge(g, e);
 				}
 				token = strtok(NULL, delim);
@@ -132,10 +138,6 @@ DLListStr GetCollection() {
 		token = strtok(line, delim);
 		while(token != NULL) {
 			if(strcmp(token, "\n") != 0) {
-				//printf("word is %s", token);
-				//strcat(token, ".txt");
-				//strcat(token, ".txt");
-				//printf("%s\n", token);
 				insertSetOrd(L, token);
 			}
 			token = strtok(NULL, delim);

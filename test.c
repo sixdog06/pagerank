@@ -24,13 +24,13 @@ int main(void) {
 	
 	DLListStr L = GetCollection();
 	Graph G = newGraph(L->nitems);
-	readSection1("url11.txt", G, L);
-	readSection1("url21.txt", G, L);
-	readSection1("url22.txt", G, L);
-	readSection1("url23.txt", G, L);
-	readSection1("url31.txt", G, L);
-	readSection1("url32.txt", G, L);
-	readSection1("url34.txt", G, L);
+	readSection1("url11", G, L);
+	readSection1("url21", G, L);
+	readSection1("url22", G, L);
+	readSection1("url23", G, L);
+	readSection1("url31", G, L);
+	readSection1("url32", G, L);
+	readSection1("url34", G, L);
 
 	/*
 	// test graph and double linked list
