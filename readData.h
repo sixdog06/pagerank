@@ -4,5 +4,6 @@
 
 #define MAXSTRING 1000
 
-void readSection1(char *urlname, Graph g);
+void readSection1(char *urlname, Graph g, DLListStr L);
 DLListStr GetCollection();
+void GetGraph(DLListStr L, Graph g);

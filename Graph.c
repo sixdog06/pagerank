@@ -38,11 +38,12 @@ bool validV(Graph g, Vertex v) {
 }
 
 void insertEdge(Graph g, Edge e) {
+  printf("v = %d, w = %d\n", e.v, e.w);
    assert(g != NULL && validV(g,e.v) && validV(g,e.w));
 
    if (!g->edges[e.v][e.w]) {  // edge e not in graph
       g->edges[e.v][e.w] = 1;
-      g->edges[e.w][e.v] = 1;
+      //g->edges[e.w][e.v] = 1;
       g->nE++;
    }
 }
@@ -52,7 +53,7 @@ void removeEdge(Graph g, Edge e) {
 
    if (g->edges[e.v][e.w]) {   // edge e in graph
       g->edges[e.v][e.w] = 0;
-      g->edges[e.w][e.v] = 0;
+      //g->edges[e.w][e.v] = 0;
       g->nE--;
    }
 }

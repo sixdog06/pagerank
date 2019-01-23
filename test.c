@@ -19,24 +19,32 @@ int main(void) {
 	insertSetOrd(L, "url16");
 	showDLListStr(L);
 */
-/*
+
 	// test readData 1
-	Graph G = newGraph(1);
-	readSection1("url11.txt", G);
-	readSection1("url21.txt", G);
-	readSection1("url22.txt", G);
-	readSection1("url23.txt", G);
-	readSection1("url31.txt", G);
-	readSection1("url32.txt", G);
-	readSection1("url34.txt", G);
-*/
+	
+	DLListStr L = GetCollection();
+	Graph G = newGraph(L->nitems);
+	readSection1("url11.txt", G, L);
+	readSection1("url21.txt", G, L);
+	readSection1("url22.txt", G, L);
+	readSection1("url23.txt", G, L);
+	readSection1("url31.txt", G, L);
+	readSection1("url32.txt", G, L);
+	readSection1("url34.txt", G, L);
+
+	/*
 	// test graph and double linked list
 	DLListStr L = GetCollection();
 	showDLListStr(L);
 	for(int i = 0; i < 7; i++) {
 	    printf("%s ", show_a_Str(L, i));
-		printf("%d\n", show_Index(L, show_a_Str(L, i)));
+		//printf("%d\n", show_Index(L, show_a_Str(L, i)));
 	}
+	
+	Graph g = newGraph(L->nitems);
+	GetGraph(L, g);
+	showGraph(g);
+*/
 	return 0;
 }
 

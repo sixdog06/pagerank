@@ -12,10 +12,23 @@
 // Implementation given in DLListStr.c
 // Implements a DLListStr of string 
 
+// data structures representing DLListStr
+typedef struct DLListNode {
+	char   value[100];  // value of this list item (string)
+	struct DLListNode *prev;
+	               // pointer previous node in list
+	struct DLListNode *next;
+	               // pointer to next node in list
+} DLListNode;
+
+typedef struct DLListRep {
+	int  nitems;      // count of items in list
+	DLListNode *first; // first node in list
+	DLListNode *curr;  // current node in list
+	DLListNode *last;  // last node in list
+} DLListRep;
+
 typedef struct DLListRep *DLListStr;
-
-
-
 
 // create a new empty DLListStr
 DLListStr newDLListStr();

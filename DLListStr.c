@@ -14,23 +14,6 @@
 
 #include "DLListStr.h"
 
-// data structures representing DLListStr
-
-typedef struct DLListNode {
-	char   value[100];  // value of this list item (string)
-	struct DLListNode *prev;
-	               // pointer previous node in list
-	struct DLListNode *next;
-	               // pointer to next node in list
-} DLListNode;
-
-typedef struct DLListRep {
-	int  nitems;      // count of items in list
-	DLListNode *first; // first node in list
-	DLListNode *curr;  // current node in list
-	DLListNode *last;  // last node in list
-} DLListRep;
-
 // create a new DLListNode (private function)
 static DLListNode *newDLListNode(char *val)
 {
@@ -106,7 +89,7 @@ void insertSetOrd(DLListStr L, char *val){
 	L->nitems++;
 }
 
-// find str at certion index
+// find string at certion index
 char *show_a_Str(DLListStr L, int n) {
 	DLListNode *curr = L->first;
 	while(n>0) {
@@ -116,14 +99,16 @@ char *show_a_Str(DLListStr L, int n) {
 	return curr->value;
 }
 
-// find the indx of a str
+// find the indx of a string
 int show_Index(DLListStr L, char *s) {
 	int n = 0;
 	DLListNode *curr = L->first;
 	while(curr->value != NULL && strcmp(curr->value, s)) {
 		curr = curr->next;	
+		printf("%s\n", curr->value);
 		n++;
 	}
+
 	return n;
 }
 
