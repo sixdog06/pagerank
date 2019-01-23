@@ -105,7 +105,6 @@ int show_Index(DLListStr L, char *s) {
 	DLListNode *curr = L->first;
 	while(curr->value != NULL && strcmp(curr->value, s)) {
 		curr = curr->next;	
-		printf("%s\n", curr->value);
 		n++;
 	}
 

@@ -3,7 +3,6 @@
 #include "Graph.h"
 #include "readData.h"
 
-
 int main(void) {
 /*	
 	// test DLListStr.c DLListStr.h
@@ -24,13 +23,21 @@ int main(void) {
 	
 	DLListStr L = GetCollection();
 	Graph G = newGraph(L->nitems);
-	readSection1("url11", G, L);
-	readSection1("url21", G, L);
-	readSection1("url22", G, L);
-	readSection1("url23", G, L);
-	readSection1("url31", G, L);
-	readSection1("url32", G, L);
-	readSection1("url34", G, L);
+	/*
+	readSection1("url11", G);
+	readSection1("url21", G);
+	readSection1("url22", G);
+	readSection1("url23", G);
+	readSection1("url31", G);
+	readSection1("url32", G);
+	readSection1("url34", G);
+	*/
+	//Edge e;
+
+
+	GetGraph(G, L);
+	//insertEdge(G, e);
+	showGraph(G);
 
 	/*
 	// test graph and double linked list
