@@ -66,6 +66,7 @@ void readSection1(char *urlname, Graph g){
 			flag = 1;
 		}
 	}
+	fclose(f);
 	free(L);
 }
 
