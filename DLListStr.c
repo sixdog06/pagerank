@@ -51,7 +51,6 @@ void insertSetOrd(DLListStr L, char *val){
 	/* 
 	   implement this function to
 	   insert val in L  (in order), no duplicates (set)
-
 	*/
 	if(L == NULL) {
 		return;
@@ -107,7 +106,6 @@ int show_Index(DLListStr L, char *s) {
 		curr = curr->next;	
 		n++;
 	}
-
 	return n;
 }
 
