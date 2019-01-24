@@ -15,6 +15,5 @@ typedef struct Edge {
 Graph newGraph(int);
 void  insertEdge(Graph, Edge);
 void  removeEdge(Graph, Edge);
-bool  adjacent(Graph, Vertex, Vertex);
 void  showGraph(Graph);
 void  freeGraph(Graph);
