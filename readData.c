@@ -5,8 +5,7 @@
 #include "Graph.h"
 #include "readData.h"
 #include "DLListStr.h"
-
-//#include "InvertedIdx.h"
+#include "InvertedIdx.h"
 
 /*
   A possible way to read data ... 
@@ -44,8 +43,13 @@ void readSection1(char *urlname, Graph g){
 	while(fgets(line, MAXSTRING, f) != NULL) {
 
 		int len = strlen(line);
-		if(line[len-1] == '\n') { // get rid of the '\n'
+		if(line[len-1] == '\n') { // get rid of the '\n' and '\t'
 			line[len-1] = '\0';
+		}
+		for(int i = len-1; i >= 0; i--) {
+			if(line[i] == '\t') {
+				line[i] = ' ';
+			}
 		}
 		if(strcmp(line, "#end Section-1") == 0) {
 			return;
@@ -69,10 +73,9 @@ void readSection1(char *urlname, Graph g){
 	fclose(f);
 	free(L);
 }
-
-/*
-void readSection2(char *filename, InvertedIdx idx){
-
+//void readSection2(char *filename, InvertedIdx idx){
+void readSection2(char *filename){
+	/*
    let's say filename is "url31.txt"
    Open "url31.txt"
    read Section-2 
@@ -81,32 +84,51 @@ void readSection2(char *filename, InvertedIdx idx){
 	 read lines (tokens) and add  words (normalised) in inverted index ADT idx
 	 stop reading when first two tokens are "#end" and  "Section-2"
 	)
+	*/
+	DLListStr L = GetCollection();
 
 	char delim[2] = " ";
 	char *token;
 	char line[MAXSTRING] ;
 	FILE *f;
 	int flag = 0; // if flag = 1, capture the urls
+	char temp[100];
+	strcpy(temp, filename);
+	strcat(temp, ".txt");
 	
 	// open a vaild file
-	if((f = fopen (urlname , "r")) == NULL) {
+	if((f = fopen (temp, "r")) == NULL) {
 		return;
 	}
+	int len;
 	while(fgets(line, MAXSTRING, f) != NULL) {
-		int len = strlen(line);
-		if(line[len-1] == '\n') { // get rid of the '\n'
+
+		len = strlen(line);
+		if(line[len-1] == '\n') { // get rid of the '\n' and '\t'
 			line[len-1] = '\0';
 		}
-		//printf("line is %s\n", line);
+		for(int i = len-1; i >= 0; i--) {
+			if(line[i] == '\t') {
+				line[i] = ' ';
+			}
+		}
+		// get rid of the punctuation marks
+		len = strlen(line);
+		for(int i = len-1; i >= 0; i--) {
+			if(line[i] == '.' || line[i] == ',' || line[i] == ';' || line[i] == '?') { // get rid of the punctuation marks
+				line[i] = '\0';
+			}
+		}
 		if(strcmp(line, "#end Section-2") == 0) {
 			return;
 		}
 		if(flag == 1) {
+			//printf("%s!\n", line);
 	        token = strtok(line, delim);
 			while(token != NULL) {
 				if(strcmp(token, "\n") != 0) {
-					printf("word is %s", token);
-
+					//TreeInsert(g, e);
+					printf("%s\n", token);
 				}
 				token = strtok(NULL, delim);
 			}
@@ -115,9 +137,10 @@ void readSection2(char *filename, InvertedIdx idx){
 			flag = 1;
 		}
 	}
-
+	fclose(f);
+	free(L);
 }
-*/
+
 DLListStr GetCollection() {
 	char delim[2] = " ";
 	char *token;

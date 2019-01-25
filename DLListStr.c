@@ -71,7 +71,7 @@ void insertSetOrd(DLListStr L, char *val){
 		}
 		if(node == NULL) {
 			L->last->next = new;
-    	    		new->prev = L->last;
+    	    new->prev = L->last;
 			new->next = NULL;
 			L->last = new;
 		} else if(node == L->first) {
