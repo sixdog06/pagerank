@@ -74,7 +74,7 @@ void readSection1(char *urlname, Graph g){
 	free(L);
 }
 //void readSection2(char *filename, InvertedIdx idx){
-void readSection2(char *filename){
+void readSection2(char *filename, Tree t) {
 	/*
    let's say filename is "url31.txt"
    Open "url31.txt"
@@ -85,7 +85,7 @@ void readSection2(char *filename){
 	 stop reading when first two tokens are "#end" and  "Section-2"
 	)
 	*/
-	DLListStr L = GetCollection();
+	//DLListStr L = GetCollection();
 
 	char delim[2] = " ";
 	char *token;
@@ -123,12 +123,11 @@ void readSection2(char *filename){
 			return;
 		}
 		if(flag == 1) {
-			//printf("%s!\n", line);
 	        token = strtok(line, delim);
 			while(token != NULL) {
 				if(strcmp(token, "\n") != 0) {
-					//TreeInsert(g, e);
 					printf("%s\n", token);
+					TreeInsert(t, token);
 				}
 				token = strtok(NULL, delim);
 			}
@@ -138,7 +137,7 @@ void readSection2(char *filename){
 		}
 	}
 	fclose(f);
-	free(L);
+	//free(L);
 }
 
 DLListStr GetCollection() {

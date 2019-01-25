@@ -12,15 +12,23 @@
 #include "InvertedIdx.h"
 #include "DLListStr.h"
 
+#define data(tree)  ((tree)->data)
+#define left(tree)  ((tree)->left)
+#define right(tree) ((tree)->right)
 
+typedef struct Node {
+   Tree left, right;
+   char  data[100];
+   DLListStr  list;	
+} Node;
 
 // make a new node containing data
 Tree newNode(Item it) {
-   Tree new = malloc(sizeof(Node));
-   assert(new != NULL);
-   strcpy(new->data, it);  // replace,   data(new) = it;
-   left(new) = right(new) = NULL;
-   return new;
+    Tree new = malloc(sizeof(Node));
+    assert(new != NULL);
+    strcpy(new->data, it);  // replace,   data(new) = it;
+    left(new) = right(new) = NULL;
+    return new;
 }
 
 // create a new empty Tree
@@ -39,18 +47,19 @@ void freeTree(Tree t) {
 
 // display Tree sideways
 void showTreeR(Tree t, int depth) {
-   if (t != NULL) {
-      showTreeR(right(t), depth+1);
-      int i;
-      for (i = 0; i < depth; i++)
-	 putchar('\t');            // TAB character
-      printf("%s\n", data(t));
-      showTreeR(left(t), depth+1);
+    if (t != NULL) {
+        showTreeR(right(t), depth+1);
+        int i;
+        for(i = 0; i < depth; i++) {
+        putchar('\t');            // TAB character
+    }
+    printf("%s\n", data(t));
+    showTreeR(left(t), depth+1);
    }
 }
 
 void showTree(Tree t) {
-   showTreeR(t, 0);
+    showTreeR(t, 0);
 }
 
 // check whether a key is in a Tree
@@ -70,15 +79,18 @@ bool TreeSearch(Tree t, Item it) {
 
 // insert a new item into a Tree
 Tree TreeInsert(Tree t, Item it) {
-   if (t == NULL)
+   if(t == NULL) {
+    printf("success\n");
       t = newNode(it);
-
-   else if (strcmp(it, data(t)) < 0)   //replace, else if (it < data(t))
+   }
+   else if(strcmp(it, data(t)) < 0) {  //replace, else if (it < data(t))
       left(t) = TreeInsert(left(t), it);
-
-   else if (strcmp(it, data(t)) > 0)  //replace, else if (it > data(t))
+   }
+   else if (strcmp(it, data(t)) > 0) {  //replace, else if (it > data(t))
       right(t) = TreeInsert(right(t), it);
-
+   } else {
+      ; //!!!!!!!!!!!!!!!!!!!!!!!!
+   }
    return t;
 }
 

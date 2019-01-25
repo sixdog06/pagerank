@@ -9,12 +9,20 @@
 
 int main(void) {
 	//DLListStr L = GetCollection();
-	readSection2("url11");
-/*	readSection2("url21");
-	readSection2("url22");
-	readSection2("url23");
-	readSection2("url31");
-	readSection2("url32");
-	readSection2("url34");*/
+	
+	Tree t = newTree();
+	
+	t = TreeInsert(t, "avacasca5");
+/*	TreeInsert(t, "avacasca2");
+	TreeInsert(t, "avacasca1");
+	TreeInsert(t, "avacasca10");*/
+	readSection2("url11", t);
+	if(t == NULL) {
+		printf("yes!!!!!!\n");
+	} else {
+		printf("no!!!!!!\n");
+	}
+	showTree(t);
+	free(t);
 	return 0;
 }
