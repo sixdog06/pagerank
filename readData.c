@@ -74,7 +74,7 @@ void readSection1(char *urlname, Graph g){
 	free(L);
 }
 //void readSection2(char *filename, InvertedIdx idx){
-void readSection2(char *filename, Tree t) {
+Tree readSection2(char *filename, Tree t) {
 	/*
    let's say filename is "url31.txt"
    Open "url31.txt"
@@ -86,7 +86,9 @@ void readSection2(char *filename, Tree t) {
 	)
 	*/
 	//DLListStr L = GetCollection();
-
+	if(t == NULL) {
+		t = newTree();
+	}
 	char delim[2] = " ";
 	char *token;
 	char line[MAXSTRING] ;
@@ -98,7 +100,7 @@ void readSection2(char *filename, Tree t) {
 	
 	// open a vaild file
 	if((f = fopen (temp, "r")) == NULL) {
-		return;
+		return NULL;
 	}
 	int len;
 	while(fgets(line, MAXSTRING, f) != NULL) {
@@ -120,14 +122,14 @@ void readSection2(char *filename, Tree t) {
 			}
 		}
 		if(strcmp(line, "#end Section-2") == 0) {
-			return;
+			return t;
 		}
 		if(flag == 1) {
 	        token = strtok(line, delim);
 			while(token != NULL) {
 				if(strcmp(token, "\n") != 0) {
-					printf("%s\n", token);
-					TreeInsert(t, token);
+					// printf("%s\n", token);
+					t = TreeInsert(t, token, filename);
 				}
 				token = strtok(NULL, delim);
 			}
@@ -138,6 +140,7 @@ void readSection2(char *filename, Tree t) {
 	}
 	fclose(f);
 	//free(L);
+	return t;
 }
 
 DLListStr GetCollection() {

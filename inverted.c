@@ -8,19 +8,17 @@
 #include "InvertedIdx.h"
 
 int main(void) {
-	//DLListStr L = GetCollection();
+	DLListStr L = GetCollection();
 	
 	Tree t = newTree();
 	
-	t = TreeInsert(t, "avacasca5");
 /*	TreeInsert(t, "avacasca2");
 	TreeInsert(t, "avacasca1");
 	TreeInsert(t, "avacasca10");*/
-	readSection2("url11", t);
-	if(t == NULL) {
-		printf("yes!!!!!!\n");
-	} else {
-		printf("no!!!!!!\n");
+	DLListNode *node = L->first;
+	while(node != NULL) {
+		t = readSection2(node->value, t);
+		node = node->next;
 	}
 	showTree(t);
 	free(t);

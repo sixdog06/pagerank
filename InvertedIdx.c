@@ -49,13 +49,19 @@ void freeTree(Tree t) {
 void showTreeR(Tree t, int depth) {
     if (t != NULL) {
         showTreeR(right(t), depth+1);
-        int i;
-        for(i = 0; i < depth; i++) {
-        putchar('\t');            // TAB character
+        //int i;
+        //for(i = 0; i < depth; i++) {
+        //putchar('\t');            // TAB character
+        //}
+        printf("%s", data(t));
+        DLListNode *node = t->list->first;
+        while(node != NULL) {
+            printf(" %s", node->value);
+            node = node->next;
+        }
+        printf("\n");
+        showTreeR(left(t), depth+1);
     }
-    printf("%s\n", data(t));
-    showTreeR(left(t), depth+1);
-   }
 }
 
 void showTree(Tree t) {
@@ -78,19 +84,20 @@ bool TreeSearch(Tree t, Item it) {
 }
 
 // insert a new item into a Tree
-Tree TreeInsert(Tree t, Item it) {
-   if(t == NULL) {
-    printf("success\n");
-      t = newNode(it);
-   }
-   else if(strcmp(it, data(t)) < 0) {  //replace, else if (it < data(t))
-      left(t) = TreeInsert(left(t), it);
-   }
-   else if (strcmp(it, data(t)) > 0) {  //replace, else if (it > data(t))
-      right(t) = TreeInsert(right(t), it);
-   } else {
-      ; //!!!!!!!!!!!!!!!!!!!!!!!!
-   }
-   return t;
+Tree TreeInsert(Tree t, Item it, char *filename) {
+    if(t == NULL) {
+        t = newNode(it);
+        t->list = newDLListStr();
+        insertSetOrd(t->list, filename);
+    }
+    else if(strcmp(it, data(t)) > 0) {  //replace, else if (it < data(t))
+        left(t) = TreeInsert(left(t), it, filename);
+    }
+    else if (strcmp(it, data(t)) < 0) {  //replace, else if (it > data(t))
+        right(t) = TreeInsert(right(t), it, filename);
+    } else {
+        insertSetOrd(t->list, filename);
+    }
+    return t;
 }
 

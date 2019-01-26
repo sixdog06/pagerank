@@ -20,8 +20,8 @@ static DLListNode *newDLListNode(char *val)
 	DLListNode *new;
 	new = malloc(sizeof(DLListNode));
 	assert(new != NULL);
-
-        strcpy(new->value, val);  // for int, new->value = it;
+	
+	strcpy(new->value, val);  // for int, new->value = it;
 	
 	new->prev = new->next = NULL;
 	return new;
@@ -47,7 +47,6 @@ DLListStr newDLListStr()
    post-condition: val is inserted in L, L is ordered (increasing) with no duplicates
 */
 void insertSetOrd(DLListStr L, char *val){
-
 	/* 
 	   implement this function to
 	   insert val in L  (in order), no duplicates (set)

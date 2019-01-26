@@ -16,7 +16,7 @@ void freeTree(Tree);   // free memory associated with Tree
 void showTree(Tree);   // display a Tree (sideways)
 
 bool TreeSearch(Tree, Item);   // check whether an item is in a Tree
-Tree TreeInsert(Tree, Item);   // insert a new item into a Tree
+Tree TreeInsert(Tree, Item, char *filename);   // insert a new item into a Tree
 
 
 
