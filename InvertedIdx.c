@@ -49,10 +49,6 @@ void freeTree(Tree t) {
 void showTreeR(Tree t, int depth) {
     if (t != NULL) {
         showTreeR(right(t), depth+1);
-        //int i;
-        //for(i = 0; i < depth; i++) {
-        //putchar('\t');            // TAB character
-        //}
         printf("%s", data(t));
         DLListNode *node = t->list->first;
         while(node != NULL) {
@@ -101,3 +97,22 @@ Tree TreeInsert(Tree t, Item it, char *filename) {
     return t;
 }
 
+// save tree to file
+void saveTreeR(Tree t, int depth, FILE *fp) {
+    if (t != NULL) {
+        saveTreeR(right(t), depth+1, fp);
+        fputs(data(t), fp);
+        DLListNode *node = t->list->first;
+        while(node != NULL) {
+            fputs(" ", fp);
+            fputs(node->value, fp);
+            node = node->next;
+        }
+        fputs("\n", fp);
+        saveTreeR(left(t), depth+1, fp);
+    }
+}
+
+void saveTree(Tree t, FILE *fp) {
+    saveTreeR(t, 0, fp);
+}

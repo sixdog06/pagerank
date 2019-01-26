@@ -8,19 +8,18 @@
 #include "InvertedIdx.h"
 
 int main(void) {
+	FILE *fp;
+	fp = fopen("invertedIndex.txt", "w+");
 	DLListStr L = GetCollection();
-	
 	Tree t = newTree();
-	
-/*	TreeInsert(t, "avacasca2");
-	TreeInsert(t, "avacasca1");
-	TreeInsert(t, "avacasca10");*/
 	DLListNode *node = L->first;
+	
 	while(node != NULL) {
 		t = readSection2(node->value, t);
 		node = node->next;
 	}
-	showTree(t);
+	// save tree to
+	saveTree(t, fp);
 	free(t);
 	return 0;
 }

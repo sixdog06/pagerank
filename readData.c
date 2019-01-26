@@ -13,18 +13,7 @@
 */
 
 
-void readSection1(char *urlname, Graph g){
-
-/*
-   let's say urlname is "url31"
-   Open "url31.txt"
-   read Section-1 
-	(How?, a simple approach ... 
-	 skip lines until first two tokens are "#start" and  "Section-1"
-	 read lines (tokens) and add the required links in graph g
-	 stop reading when first two tokens are "#end" and  "Section-1"
-	)
-*/	
+void readSection1(char *urlname, Graph g) {
 	DLListStr L = GetCollection();
 
 	char delim[2] = " ";
@@ -73,19 +62,8 @@ void readSection1(char *urlname, Graph g){
 	fclose(f);
 	free(L);
 }
-//void readSection2(char *filename, InvertedIdx idx){
+
 Tree readSection2(char *filename, Tree t) {
-	/*
-   let's say filename is "url31.txt"
-   Open "url31.txt"
-   read Section-2 
-	(How?, a simple approach ... 
-	 skip lines until first two tokens are "#start" and  "Section-2"
-	 read lines (tokens) and add  words (normalised) in inverted index ADT idx
-	 stop reading when first two tokens are "#end" and  "Section-2"
-	)
-	*/
-	//DLListStr L = GetCollection();
 	if(t == NULL) {
 		t = newTree();
 	}
@@ -128,7 +106,6 @@ Tree readSection2(char *filename, Tree t) {
 	        token = strtok(line, delim);
 			while(token != NULL) {
 				if(strcmp(token, "\n") != 0) {
-					// printf("%s\n", token);
 					t = TreeInsert(t, token, filename);
 				}
 				token = strtok(NULL, delim);
@@ -139,7 +116,6 @@ Tree readSection2(char *filename, Tree t) {
 		}
 	}
 	fclose(f);
-	//free(L);
 	return t;
 }
 
@@ -177,4 +153,90 @@ void GetGraph(Graph g, DLListStr L) {
 		readSection1(node->value, g);
 		node = node->next;
 	}
+}
+
+// set the initialize PR to 1/N
+void Init_graph(Graph g, int N) {
+    if(g == NULL) {
+    	return;
+    }
+    int i;
+    for (i = 0; i < g->nV; i++) {
+			g->pr[i] = g->pr[i] / N;
+    }
+}
+
+void PageRank(Graph g, DLListStr L, double d, double diffPR, double maxIteration) {
+	int iteration = 0;
+	double diff = diffPR;
+	int N = L->nitems;
+	double temp[N];
+	double sum;
+	int i, j;
+
+	while(iteration < maxIteration && diff >= diffPR) {
+		iteration++;
+		for(i = 0; i < N; i++) {
+			sum = 0;
+			for(j = 0; j < N; j++) {
+				if(g->edges[j][i] == 1) {
+					sum += g->pr[j] / outdegreeGraph(g, j);
+				}
+			}
+			temp[i] = (1 - d) / N + d * sum;
+		}
+		
+		for(i = 0; i < N; i++) {
+			//printf("temp is %.7f\n", temp[i]);
+			g->pr[i] = temp[i];
+		}
+	}
+}
+
+// output the urls to pagerangList.txt
+void Order(Graph g, DLListStr L) {
+	int N = L->nitems;
+	double temp_pr[N];
+	char temp_url[N][100];
+	int i, j;
+	DLListNode *node = L->first;
+
+	for(i = 0; i < N; i++) {
+		temp_pr[i] = g->pr[i];
+		strcpy(temp_url[i], node->value);
+		node = node->next;
+	}
+
+	// order the list
+	for(i = 0; i < N - 1; i++) {
+		for(j = 0; j < N - 1 - i; j++) {
+			if(temp_pr[j] < temp_pr[j+1]) {
+				double t = temp_pr[j];
+				temp_pr[j] = temp_pr[j+1];
+				temp_pr[j+1] = t;
+				char ct[100];
+				strcpy(ct, temp_url[j]);
+				strcpy(temp_url[j], temp_url[j+1]);
+				strcpy(temp_url[j+1], ct);
+			}
+		}
+	}
+	
+	FILE *fp;
+	fp = fopen("pagerankList.txt", "w+");
+	for(i = 0; i < N; i++) {
+		fputs(temp_url[i], fp);
+		fputs(", ", fp);
+
+		char str[100];
+		sprintf(str, "%d", outdegreeGraph(g, show_Index(L, temp_url[i])));
+		fputs(str, fp);
+		fputs(", ", fp);
+
+		sprintf(str, "%.7f", temp_pr[i]);
+		fputs(str, fp);
+		
+		fputs("\n", fp);
+	}
+	fclose(fp);
 }
