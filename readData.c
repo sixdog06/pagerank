@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #include "Graph.h"
 #include "readData.h"
@@ -106,6 +107,10 @@ Tree readSection2(char *filename, Tree t) {
 	        token = strtok(line, delim);
 			while(token != NULL) {
 				if(strcmp(token, "\n") != 0) {
+					len = strlen(token);
+					for(int i = 0; i < len; ++i) {
+						token[i] = tolower(token[i]);
+					}
 					t = TreeInsert(t, token, filename);
 				}
 				token = strtok(NULL, delim);
