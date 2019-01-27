@@ -90,7 +90,7 @@ void matched_Urls_with_PR(char *pr_file, DLListStr L, char *word, double *arr) {
 }
 
 int main(int argc, char *argv[]) {
-	int i;
+	int i, j;
 	DLListStr L = newDLListStr();
 	
 	// get the urls
@@ -100,7 +100,7 @@ int main(int argc, char *argv[]) {
 	
 	// calculate the number of urls
 	int size = L->nitems;
-	int num[size];
+	int num[size]; // first array
 	for(i = 0; i < size; i++) {
 		num[i] = 0;
 	}
@@ -109,15 +109,65 @@ int main(int argc, char *argv[]) {
 	}
 
 	// pagerank array initialize
-	double pr[size];
+	double pr[size]; // second array
+	char url[size][100];
 	DLListNode *node = L->first;
 	for(i = 0; i < L->nitems; i++) {
 		matched_Urls_with_PR("pagerankList.txt", L, node->value, pr);
+		strcpy(url[i], node->value);
 		node = node->next;
 	}
+
 	// for(i = 0; i < L->nitems; i++) {
-	// 	printf("%.7f\n", pr[i]);
+	// 	printf("%s ", url[i]);
+	// 	printf("%d ", num[i]);
+	//  	printf("%.7f\n", pr[i]);
 	// }
+
+	// order by number
+	for(i = 0; i < size - 1; i++) {
+		for(j = 0; j < size - 1 - i; j++) {
+			if(num[j] < num[j+1]) {
+				double t = pr[j];
+				pr[j] = pr[j+1];
+				pr[j+1] = t;
+
+				int nt = num[j];
+				num[j] = num[j+1];
+				num[j+1] = nt;
+
+				char ct[100];
+				strcpy(ct, url[j]);
+				strcpy(url[j], url[j+1]);
+				strcpy(url[j+1], ct);
+			}
+		}
+	}
+	// order by pagerank
+	for(i = 0; i < size - 1; i++) {
+		for(j = 0; j < size - 1 - i; j++) {
+			if(num[j] == num[j+1]) {
+				if(pr[j] < pr[j+1]) {
+					double t = pr[j];
+					pr[j] = pr[j+1];
+					pr[j+1] = t;
+
+					int nt = num[j];
+					num[j] = num[j+1];
+					num[j+1] = nt;
+
+					char ct[100];
+					strcpy(ct, url[j]);
+					strcpy(url[j], url[j+1]);
+					strcpy(url[j+1], ct);
+				}
+			}
+		}
+	}
+
+	for(i = 0; i < L->nitems; i++) {
+		printf("%s\n", url[i]);
+	}
 	
 	//showDLListStr(L);
 	return 0;
