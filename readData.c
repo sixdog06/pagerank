@@ -25,7 +25,7 @@ void readSection1(char *urlname, Graph g) {
 	char temp[100];
 	strcpy(temp, urlname);
 	strcat(temp, ".txt");
-	
+
 	// open a vaild file
 	if((f = fopen (temp, "r")) == NULL) {
 		return;
@@ -43,15 +43,17 @@ void readSection1(char *urlname, Graph g) {
 		}
 		if(strcmp(line, "#end Section-1") == 0) {
 			return;
-		}
+		}	
 		if(flag == 1) {
 	        token = strtok(line, delim);
+			
 			while(token != NULL) {
 				if(strcmp(token, "\n") != 0) {
 					Edge e;
 					e.v = show_Index(L, urlname);
 					e.w = show_Index(L, token);
-					insertEdge(g, e);
+					insertEdge(g, e);					
+							
 				}
 				token = strtok(NULL, delim);
 			}
@@ -60,6 +62,7 @@ void readSection1(char *urlname, Graph g) {
 			flag = 1;
 		}
 	}
+	
 	fclose(f);
 	free(L);
 }
@@ -174,13 +177,22 @@ void Init_graph(Graph g, int N) {
 void PageRank(Graph g, DLListStr L, double d, double diffPR, double maxIteration) {
 	int iteration = 0;
 	double diff = diffPR;
+
 	int N = L->nitems;
-	double temp[N];
+	double t_1[N];
+	double t[N];
 	double sum;
 	int i, j;
-
+	
+	for(i = 0; i < N; i++) {
+		t_1[i] = g->pr[i];
+		printf("t is %.7f\n", t_1[i]);
+	}
 	while(iteration < maxIteration && diff >= diffPR) {
 		iteration++;
+		for(i = 0; i < N; i++) {
+			t[i] = t_1[i];		
+		}
 		for(i = 0; i < N; i++) {
 			sum = 0;
 			for(j = 0; j < N; j++) {
@@ -188,13 +200,16 @@ void PageRank(Graph g, DLListStr L, double d, double diffPR, double maxIteration
 					sum += g->pr[j] / outdegreeGraph(g, j);
 				}
 			}
-			temp[i] = (1 - d) / N + d * sum;
+			t_1[i] = (1 - d) / N + d * sum;
 		}
-		
+		diff = 0;
 		for(i = 0; i < N; i++) {
-			//printf("temp is %.7f\n", temp[i]);
-			g->pr[i] = temp[i];
+			diff += abs(t_1[i] - t[i]);		
 		}
+	}
+	for(i = 0; i < N; i++) {
+		printf("t+1 is %.7f\n", t_1[i]);
+		g->pr[i] = t_1[i];
 	}
 }
 
@@ -226,13 +241,14 @@ void Order(Graph g, DLListStr L) {
 			}
 		}
 	}
-	
+
 	FILE *fp;
 	fp = fopen("pagerankList.txt", "w+");
+	
 	for(i = 0; i < N; i++) {
 		fputs(temp_url[i], fp);
 		fputs(", ", fp);
-
+		
 		char str[100];
 		sprintf(str, "%d", outdegreeGraph(g, show_Index(L, temp_url[i])));
 		fputs(str, fp);
@@ -242,6 +258,7 @@ void Order(Graph g, DLListStr L) {
 		fputs(str, fp);
 		
 		fputs("\n", fp);
+		
 	}
 	fclose(fp);
 }

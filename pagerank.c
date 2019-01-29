@@ -26,5 +26,7 @@ int main(int argc, char *argv[]) {
 	Init_graph(g, L->nitems);
 	PageRank(g, L, d, diffPR, maxIteration);
 	Order(g, L);
+
+	showGraph(g);
 	return 0;
 }
