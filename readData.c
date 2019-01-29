@@ -2,17 +2,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <math.h>
 
 #include "Graph.h"
 #include "readData.h"
 #include "DLListStr.h"
 #include "InvertedIdx.h"
-
-/*
-  A possible way to read data ... 
-
-*/
-
 
 void readSection1(char *urlname, Graph g) {
 	DLListStr L = GetCollection();
@@ -52,8 +47,7 @@ void readSection1(char *urlname, Graph g) {
 					Edge e;
 					e.v = show_Index(L, urlname);
 					e.w = show_Index(L, token);
-					insertEdge(g, e);					
-							
+					insertEdge(g, e);	
 				}
 				token = strtok(NULL, delim);
 			}
@@ -186,29 +180,28 @@ void PageRank(Graph g, DLListStr L, double d, double diffPR, double maxIteration
 	
 	for(i = 0; i < N; i++) {
 		t_1[i] = g->pr[i];
-		printf("t is %.7f\n", t_1[i]);
 	}
 	while(iteration < maxIteration && diff >= diffPR) {
 		iteration++;
 		for(i = 0; i < N; i++) {
 			t[i] = t_1[i];		
 		}
+
 		for(i = 0; i < N; i++) {
 			sum = 0;
 			for(j = 0; j < N; j++) {
 				if(g->edges[j][i] == 1) {
-					sum += g->pr[j] / outdegreeGraph(g, j);
+					sum += t[j] / outdegreeGraph(g, j);
 				}
 			}
 			t_1[i] = (1 - d) / N + d * sum;
 		}
 		diff = 0;
 		for(i = 0; i < N; i++) {
-			diff += abs(t_1[i] - t[i]);		
+			diff += fabs(t_1[i] - t[i]);		
 		}
 	}
 	for(i = 0; i < N; i++) {
-		printf("t+1 is %.7f\n", t_1[i]);
 		g->pr[i] = t_1[i];
 	}
 }

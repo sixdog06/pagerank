@@ -26,7 +26,6 @@ void findMatchedUrls(char *pr_file, DLListStr L, char *word) {
 		if(strcmp(token, word) == 0) {
 			while(token != NULL) {
 				if(strcmp(token, "\n") != 0 && strcmp(token, word) != 0) { // select the url and insert to the list
-					// printf("%s ", token);
 					insertSetOrd(L, token);
 				}
 				token = strtok(NULL, delim);
@@ -117,12 +116,6 @@ int main(int argc, char *argv[]) {
 		strcpy(url[i], node->value);
 		node = node->next;
 	}
-
-	// for(i = 0; i < L->nitems; i++) {
-	// 	printf("%s ", url[i]);
-	// 	printf("%d ", num[i]);
-	//  	printf("%.7f\n", pr[i]);
-	// }
 
 	// order by number
 	for(i = 0; i < size - 1; i++) {
