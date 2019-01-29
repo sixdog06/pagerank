@@ -34,6 +34,7 @@ void findMatchedUrls(char *pr_file, DLListStr L, char *word) {
 	}
 }
 
+// save number of urls in this search 
 void num_MatchedUrls(char *pr_file, DLListStr L, char *word, int *arr) {
 	char delim[2] = " ";
 	char *token;
@@ -60,6 +61,7 @@ void num_MatchedUrls(char *pr_file, DLListStr L, char *word, int *arr) {
 	}
 }
 
+// get the pagerank
 void matched_Urls_with_PR(char *pr_file, DLListStr L, char *word, double *arr) {
 	char delim[2] = ",";
 	char *token;
@@ -162,6 +164,5 @@ int main(int argc, char *argv[]) {
 		printf("%s\n", url[i]);
 	}
 	
-	//showDLListStr(L);
 	return 0;
 }

@@ -102,6 +102,7 @@ void saveTreeR(Tree t, int depth, FILE *fp) {
     if (t != NULL) {
         saveTreeR(right(t), depth+1, fp);
         fputs(data(t), fp);
+        fputs(" ", fp);
         DLListNode *node = t->list->first;
         while(node != NULL) {
             fputs(" ", fp);

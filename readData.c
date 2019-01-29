@@ -121,6 +121,7 @@ Tree readSection2(char *filename, Tree t) {
 	return t;
 }
 
+// get the urls in the fold
 DLListStr GetCollection() {
 	char delim[2] = " ";
 	char *token;
@@ -147,6 +148,7 @@ DLListStr GetCollection() {
 	return L;
 }
 
+// get the section1
 void GetGraph(Graph g, DLListStr L) {
 	int i;
 	DLListNode *node = L->first;
@@ -168,6 +170,7 @@ void Init_graph(Graph g, int N) {
     }
 }
 
+// calculate pagerank
 void PageRank(Graph g, DLListStr L, double d, double diffPR, double maxIteration) {
 	int iteration = 0;
 	double diff = diffPR;
@@ -206,7 +209,7 @@ void PageRank(Graph g, DLListStr L, double d, double diffPR, double maxIteration
 	}
 }
 
-// output the urls to pagerangList.txt
+// output the well-ordered urls to pagerangList.txt
 void Order(Graph g, DLListStr L) {
 	int N = L->nitems;
 	double temp_pr[N];
