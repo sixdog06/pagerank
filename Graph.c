@@ -36,7 +36,7 @@ void insertEdge(Graph g, Edge e) {
     if(g == NULL) {
         return;
     }
-    if(!g->edges[e.v][e.w]) {  // edge e not in graph
+    if(!g->edges[e.v][e.w] && e.v != e.w) {  // edge e not in graph
       g->edges[e.v][e.w] = 1;
       g->nE++;
    }
