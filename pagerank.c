@@ -27,6 +27,7 @@ int main(int argc, char *argv[]) {
 	PageRank(g, L, d, diffPR, maxIteration);
 	Order(g, L);
 
+ 	//showDLListStr(L);
 	//showGraph(g);
 	return 0;
 }

@@ -166,20 +166,20 @@ void Init_graph(Graph g, int N) {
     }
     int i;
     for (i = 0; i < g->nV; i++) {
-			g->pr[i] = g->pr[i] / N;
+			g->pr[i] = 1.0 / N;
     }
 }
 
 // calculate pagerank
 void PageRank(Graph g, DLListStr L, double d, double diffPR, double maxIteration) {
-	int iteration = 0;
-	double diff = diffPR;
-
 	int N = L->nitems;
 	double t_1[N];
 	double t[N];
 	double sum;
 	int i, j;
+
+	int iteration = 0;
+	double diff = diffPR;
 	
 	for(i = 0; i < N; i++) {
 		t_1[i] = g->pr[i];
@@ -193,17 +193,24 @@ void PageRank(Graph g, DLListStr L, double d, double diffPR, double maxIteration
 		for(i = 0; i < N; i++) {
 			sum = 0;
 			for(j = 0; j < N; j++) {
-				if(g->edges[j][i] == 1) {
+				if(g->edges[j][i] == 1 && i != j) {
 					sum += t[j] / outdegreeGraph(g, j);
+				} else if(outdegreeGraph(g, j) == 0) {
+					sum += t[j] / N;
 				}
 			}
 			t_1[i] = (1 - d) / N + d * sum;
 		}
 		diff = 0;
+		sum = 0;
 		for(i = 0; i < N; i++) {
-			diff += fabs(t_1[i] - t[i]);		
+			diff += fabs(t_1[i] - t[i]);
+			sum += t_1[i];		
+			//printf("%.7f ", t[i]);
 		}
+		//printf("   %.7f\n", sum);
 	}
+	// assign result to graph
 	for(i = 0; i < N; i++) {
 		g->pr[i] = t_1[i];
 	}

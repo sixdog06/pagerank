@@ -26,9 +26,6 @@ Graph newGraph(int V) {
         g->edges[i] = calloc(V, sizeof(int));
     }
    g->pr = malloc(V * sizeof(double)); // initialize after edge array to avoid error
-   for(i = 0; i < V; i++) {
-		g->pr[i] = 1;
-    }
    return g;
 }
 
@@ -36,7 +33,7 @@ void insertEdge(Graph g, Edge e) {
     if(g == NULL) {
         return;
     }
-    if(!g->edges[e.v][e.w] && e.v != e.w) {  // edge e not in graph
+    if(!g->edges[e.v][e.w]) {  // edge e not in graph
       g->edges[e.v][e.w] = 1;
       g->nE++;
    }
@@ -89,18 +86,6 @@ int outdegreeGraph(Graph g, int v) {
 
 // return the indegree of a vertex
 int indegreeGraph(Graph g, int v) {
-    int i;
-    int n = 0;
-    for(i = 0; i < g->nV; i++) {
-        if(g->edges[i][v] > 0) {
-            n++;
-        }
-    }
-    return n;
-}
-
-// return the indegree of a vertex
-int is_indegreeGraph(Graph g, int v, int w) {
     int i;
     int n = 0;
     for(i = 0; i < g->nV; i++) {
